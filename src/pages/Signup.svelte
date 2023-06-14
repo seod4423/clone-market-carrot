@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>회원가입</title>
-  </head>
-  <body>
-    <h2>회원가입</h2>
+<h2>회원가입</h2>
     <form id="signup-form">
       <div>
         <label for="id">아이디</label>
@@ -31,12 +23,3 @@
       <div id="info"></div>
       <button type="submit">회원가입</button>
     </form>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"
-      integrity="sha512-szJ5FSo9hEmXXe7b5AUVtn/WnL8a5VofnFeYC2i2z03uS2LhAch7ewNLbl5flsEmTTimMN0enBZg/3sQ+YOSzQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script src="js/signup.js"></script>
-  </body>
-</html>
