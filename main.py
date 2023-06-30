@@ -1,4 +1,5 @@
 from fastapi import FastAPI,UploadFile,Form,Response,Depends
+from fastapi.responses import RedirectResponse
 from fastapi_login import LoginManager
 from fastapi_login.exceptions import InvalidCredentialsException
 from fastapi.responses import JSONResponse
@@ -6,6 +7,8 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.staticfiles import StaticFiles
 from typing import Annotated
 import sqlite3
+
+logs = []
 
 SECRET = 'super-secret-key234'
 manager = LoginManager(SECRET, '/login')
@@ -26,6 +29,18 @@ cur.execute(f"""
             """)
 
 app = FastAPI()
+
+@app.post("/chatroom")
+def get_chatroom_message(message: Annotated[str,Form()]):
+    newLog = {}
+    newLog[len(logs)] = message
+    sendLogs = logs  + [newLog]
+    logs.append(newLog)
+    return JSONResponse(jsonable_encoder(sendLogs))
+
+@app.get("/chatroom")
+def get_chatroom():
+    return RedirectResponse("/chatroom.html")
 
 @manager.user_loader()
 def query_user (data):
@@ -93,7 +108,6 @@ async def get_items(user=Depends(manager)):
     rows = cur.execute(f"""
                 SELECT * FROM items;
                 """).fetchall()
-    
     return JSONResponse(jsonable_encoder(dict(row) for row in rows))
 
 @app.get('/images/{item_id}')
